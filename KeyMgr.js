@@ -327,6 +327,11 @@ const KeyMgr = class {
             this.eventSource.oncontextmenu = function (e) {
                   e.preventDefault();
             };
+            this.eventSource.addEventListener("keydown", function (e) {
+                  if (e.ctrlKey) {
+                        e.preventDefault();
+                  }
+            });
       }
 };
 
