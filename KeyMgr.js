@@ -67,11 +67,15 @@ const KeyHelper = class {
             Comma: ",",
             Period: ".",
             Enter: "Enter",
+            rightArrow: "ArrowRight",
+            leftArrow: "ArrowLeft",
+            upArrow: "ArrowUp",
+            downArrow: "ArrowDown",
       };
 
-      static convertKeyCodeToKey = (keyCode) => {
+      static convertKeyCodeToKey(keyCode) {
             return this.keyCodeMap[keyCode] || keyCode;
-      };
+      }
 };
 
 const KeyCombo = class {
@@ -97,11 +101,11 @@ const KeyCombo = class {
 };
 
 const KeyMgr = class {
-      isKeyPressed = (key) => {
+      isKeyPressed(key) {
             return this.keysPressed.includes(key);
-      };
+      }
 
-      checkForCombo = (newKeyPressKeyCode) => {
+      checkForCombo(newKeyPressKeyCode) {
             let foundCombo = false;
             this.keyCombos.forEach((keyCombo) => {
                   if (!keyCombo) {
@@ -142,9 +146,9 @@ const KeyMgr = class {
                   }
             });
             return foundCombo;
-      };
+      }
 
-      addKeyCombo = (keyComboObject) => {
+      addKeyCombo(keyComboObject) {
             let isThereAlready = false;
             this.keyCombos.forEach((combo) => {
                   if (KeyCombo.areKeyCombosEqual(combo, keyComboObject)) {
@@ -155,15 +159,15 @@ const KeyMgr = class {
                   return;
             }
             this.keyCombos.push(keyComboObject);
-      };
+      }
 
-      removeKeyCombo = (keyComboObject) => {
+      removeKeyCombo(keyComboObject) {
             this.keyCombos = this.keyCombos.filter(
                   (combo) => !KeyCombo.areKeyCombosEqual(combo, keyComboObject)
             );
-      };
+      }
 
-      keyDown = (e) => {
+      keyDown(e) {
             let refinedCode = e.code;
 
             if (refinedCode == "ShiftLeft" || refinedCode == "ShiftRight") {
@@ -207,9 +211,9 @@ const KeyMgr = class {
                         );
                   }
             });
-      };
+      }
 
-      keyUp = (e) => {
+      keyUp(e) {
             let refinedCode = e.code;
 
             if (refinedCode == "ShiftLeft" || refinedCode == "ShiftRight") {
@@ -245,9 +249,9 @@ const KeyMgr = class {
                         );
                   }
             });
-      };
+      }
 
-      addOnKeyPressEvent = (key, callback) => {
+      addOnKeyPressEvent(key, callback) {
             if (key == null) {
                   if (!this.onAnyKeyPressedEvents.includes(callback)) {
                         this.onAnyKeyPressedEvents.push(callback);
@@ -261,9 +265,9 @@ const KeyMgr = class {
                   }
                   this.onCertainKeyPressedEvents[key].push(callback);
             }
-      };
+      }
 
-      addOnKeyReleaseEvent = (key, callback) => {
+      addOnKeyReleaseEvent(key, callback) {
             if (key == null) {
                   if (!this.onAnyKeyReleasedEvents.includes(callback)) {
                         this.onAnyKeyReleasedEvents.push(callback);
@@ -277,9 +281,9 @@ const KeyMgr = class {
                   }
                   this.onCertainKeyReleasedEvents[key].push(callback);
             }
-      };
+      }
 
-      removeOnKeyPressEvent = (key, callback) => {
+      removeOnKeyPressEvent(key, callback) {
             if (key == null) {
                   this.onAnyKeyPressedEvents =
                         this.onAnyKeyPressedEvents.filter(
@@ -294,9 +298,9 @@ const KeyMgr = class {
                               (cb) => cb !== callback
                         );
             }
-      };
+      }
 
-      removeOnKeyReleaseEvent = (key, callback) => {
+      removeOnKeyReleaseEvent(key, callback) {
             if (key == null) {
                   this.onAnyKeyReleasedEvents =
                         this.onAnyKeyReleasedEvents.filter(
@@ -311,7 +315,7 @@ const KeyMgr = class {
                               (cb) => cb !== callback
                         );
             }
-      };
+      }
 
       constructor(eventSource, debug = false) {
             this.eventSource = eventSource;
